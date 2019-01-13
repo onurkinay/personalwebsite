@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PersonalSite.Models.Jobs>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+        <div>
+            <h2 style="float:left">Jobs</h2> 
+            <a asp-action="Create" style="float:right;margin-top:24px">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+                    <i class="material-icons">add</i>
+                </button>
+            </a>
+        </div>
+            <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="float:left;">
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Name</th>
+                        <th>Status</th>
+                        <th width="100%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">@item.name</td>
+                            <td>@item.status</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">There isn't any job</td> 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+         
+
+</div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+</div>

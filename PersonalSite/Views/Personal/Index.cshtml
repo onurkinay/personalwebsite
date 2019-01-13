@@ -1,0 +1,239 @@
+﻿@model IEnumerable<PersonalSite.Models.Personal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .mdl-button--file input {
+        cursor: pointer;
+        height: 100%;
+        right: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        width: 300px;
+        z-index: 4;
+    }
+
+    .mdl-textfield--file .mdl-textfield__input {
+        box-sizing: border-box;
+        width: calc(100% - 32px);
+    }
+
+    .mdl-textfield--file .mdl-button--file {
+        right: 0;
+    }
+</style>
+
+<div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
+<script>
+    r(function () {
+        var notification = document.querySelector('.mdl-js-snackbar');
+        if (@TempData["Changed"] == 1) {
+            notification.MaterialSnackbar.showSnackbar(
+                {
+                    message: 'Personal Information has been changed'
+                }
+            @TempData["Changed"] = 0;
+            );
+        }
+    });
+
+    function r(f) { /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f() }
+
+
+</script>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+
+        @if (Model.Count() != 0)
+        {
+
+            <h3>Change my profile</h3> 
+            Personal pers = Model.Single() as Personal;
+
+            <form asp-action="Edit" asp-route-id="@pers.ID" enctype="multipart/form-data" id="EditForm">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="name" type="text" id="sample3" value="@pers.name">
+                    <label class="mdl-textfield__label" for="sample3">Name...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                    <input name="image" value="@pers.image" type="hidden" />
+                    <input class="mdl-textfield__input" placeholder="Change my photo..." type="text" id="TEXT_ID" readonly />
+                    <div class="mdl-button mdl-button--icon mdl-button--file">
+                        <i class="material-icons">attach_file</i>
+                        <input type="file" name="imgFile" id="imgFile" onchange="document.getElementById('TEXT_ID').value=this.files[0].name;" />
+                    </div>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" value="@pers.image_desc" name="image_desc" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Image Description</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="desc" type="text" id="sample3" value="@pers.desc">
+                    <label class="mdl-textfield__label" for="sample3">Description</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                    <input class="mdl-textfield__input" name="skilsList" placeholder="add a skill" type="text" id="skill" />
+                    <div class="mdl-button mdl-button--icon mdl-button--file" id="addSkill">
+                        <i class="material-icons">add</i>
+
+                    </div>
+                    <input type="hidden" value="" name="skills" />
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="phone" value="@pers.phone" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+                    <label class="mdl-textfield__label" for="sample4">Phone Number...</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="email" type="email" id="sample3" value="@pers.email">
+                    <label class="mdl-textfield__label" for="sample3">E-Mail</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="place" type="text" id="sample3" value="@pers.place">
+                    <label class="mdl-textfield__label" for="sample3">Place</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="map" type="text" id="sample3" value="@pers.map">
+                    <label class="mdl-textfield__label" for="sample3">Map...</label>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                    SEND
+                </button>
+                <div id="skillList">
+                    <h5>Skills List</h5>
+                    @if (pers.skills != null)
+                    {
+
+
+                        @foreach (string skill in pers.skills.Split(","))
+                        {
+                            <span class="mdl-chip mdl-chip--deletable" id="item">
+                                <span class="mdl-chip__text" id="skillName">@skill</span>
+                                <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                            </span>
+                        }
+
+
+                    }
+                </div>
+            </form>
+        }
+
+        else if (Model.Count() == 0)
+        {
+
+            <h3>First setup... </h3>
+            <form asp-action="Create">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="name" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Name...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                    <input class="mdl-textfield__input" name="image" placeholder="Add a photo" type="text" id="TEXT_ID" readonly />
+                    <div class="mdl-button mdl-button--icon mdl-button--file">
+                        <i class="material-icons">attach_file</i>
+                        <input type="file" name="NAME" id="ID" onchange="document.getElementById('TEXT_ID').value=this.files[0].name;" />
+                    </div>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="image_desc" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Image Description</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="desc" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Description</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                    <input class="mdl-textfield__input" name="skilsList" placeholder="add a skill" type="text" id="skill" />
+                    <div class="mdl-button mdl-button--icon mdl-button--file" id="addSkill">
+                        <i class="material-icons">add</i>
+
+                    </div>
+                    <input type="hidden" value="" name="skills" />
+                </div>
+               
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" name="phone" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+                    <label class="mdl-textfield__label" for="sample4">Phone Number...</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="email" type="email" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">E-Mail</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="place" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Place</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" name="map" type="text" id="sample3">
+                    <label class="mdl-textfield__label" for="sample3">Map...</label>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                    SEND
+                </button>
+                <div id="skillList">
+                    <h5>Skills List</h5>
+
+                </div>
+            </form>
+
+
+            @section Scripts {
+                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            }
+
+        }
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+</div>
+
+<script>  
+    $('#addSkill').click(function (event) {
+        addSkill();
+    });
+
+    $("#item button").click(function () {
+        $(this).closest("#item").remove();
+        refreshList();
+    });
+    function refreshList() {
+        var skillsArray = [];
+        $("#skillList #item").each(function (index) {
+            skillsArray.push($(this).find("#skillName").text());
+        });
+        $('input[name="skills"]').val(skillsArray.toString());
+    
+    }
+
+    function addSkill() {
+        if ($('#skill').val() != "") {
+            $("#skillList").append(
+                '<span class="mdl-chip mdl-chip--deletable" id="item">' +
+                '<span class="mdl-chip__text" id="skillName">' + $('#skill').val() + '</span>' +
+                ' <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>'
+                + '</span>').on('click', '#item', function () {
+                    $(this).remove();
+                    refreshList();
+                });;
+            $('#skill').val("");
+            refreshList();
+        }
+    }
+
+    $(document).ready(function () { refreshList(); });
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13) {
+            addSkill();
+            event.preventDefault();
+            return false;
+        }
+    });
+</script>

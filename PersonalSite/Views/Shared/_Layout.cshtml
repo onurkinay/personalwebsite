@@ -1,0 +1,89 @@
+﻿
+<html>
+
+<head>
+    <title>@ViewData["Title"] | My Page</title>
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/content/style.css">
+    <link rel="stylesheet" href="~/content/material.min.css">
+    <script src="~/content/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .no-js #loader {
+            display: none;
+        }
+
+        .js #loader {
+            display: block;
+            position: absolute;
+            left: 100px;
+            top: 0;
+        }
+
+        .se-pre-con {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url(load.gif) center no-repeat #fff;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".se-pre-con").fadeOut("slow");
+            }, 500);
+        });
+    </script>
+</head> 
+<body>
+    <div class="se-pre-con"></div>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">MY PAGE</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="/">HOMEPAGE</a>
+                    <a class="mdl-navigation__link" href="#">MY BLOG</a>
+                </nav>
+                <!-- FOR SMALL DEVICES MENU-->
+                <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon mdl-layout--small-screen-only">
+                    <i class="material-icons">more_vert</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect " for="demo-menu-lower-right">
+                    <a href="#"> <li class="mdl-menu__item">Homepage</li></a>
+                    <a href="#"> <li class="mdl-menu__item">My blog</li></a>
+                </ul>
+                <!-- !FOR SMALL DEVICES MENU-->
+            </div>
+        </header>
+
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </main>
+
+        <footer class="mdl-mini-footer" style="padding:9px 16px">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo">MY PAGE</div>
+                <ul class="mdl-mini-footer__link-list">
+                    <li>© 2018 @Context.Request.Host.Host All Rights Reserved | Hosted by Azure Cloud Tech.</li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+  
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

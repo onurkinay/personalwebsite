@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mdl-grid">
+   
+        <div class="mdl-cell mdl-cell--4-col"></div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <h3>Login</h3>
+
+            @ViewBag.error
+            <form action="/Account/Login" method="post">
+                <div class="mdl-cell mdl-cell--10-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input id="email" class="mdl-textfield__input" name="EMail" />
+                        <label class="mdl-textfield__label" for="email">Email</label>
+                    </div>
+                    <div id="emailError" class="login-error"></div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--10-col">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input id="password" class="mdl-textfield__input" type="password" name="Password" />
+                        <label class="mdl-textfield__label" for="password">Password</label>
+                    </div>
+                    <div id="passwordError" class="login-error"></div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--10-col">
+                    <button id="login" type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored">
+                        Login
+                    </button>
+                    <button id="forgot" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
+                        Forgot Password
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col"></div>
+    </div> 

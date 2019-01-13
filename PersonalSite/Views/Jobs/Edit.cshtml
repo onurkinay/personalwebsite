@@ -1,0 +1,41 @@
+﻿@model PersonalSite.Models.Jobs
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+        <h2>Edit</h2>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" name="name" type="text" id="sample3" value="@Model.name">
+                <label class="mdl-textfield__label" for="sample3">Name...</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" name="desc" type="text" id="sample3" value="@Model.desc">
+                <label class="mdl-textfield__label" for="sample3">Description...</label>
+            </div>
+            <div class="mdl-textfield">
+                <input class="mdl-slider mdl-js-slider" type="range" name="status"
+                       min="0" max="2" value="@Model.status" tabindex="0">
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" name="end" type="date" id="sample3" value="@Model.end.ToString("yyyy-MM-dd")" required>
+                <label class="mdl-textfield__label" for="sample3">End Date...</label>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                SEND
+            </button>
+        </form>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
